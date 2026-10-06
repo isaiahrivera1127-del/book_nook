@@ -29,7 +29,9 @@ class Book {
   });
 
   // Named constructor for free samples
-  Book.freeSample(this.title, this.author) : price = 0.0, isAvailable = true;
+  Book.freeSample(this.title, this.author)
+      : price = 0.0,
+        isAvailable = true;
 
   String getSummary() {
     return '$title by $author — ${formatPrice(price)}';
@@ -109,7 +111,9 @@ class BookNookApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: BookListScreen());
+    return MaterialApp(
+      home: BookListScreen(),
+    );
   }
 }
 
@@ -143,22 +147,71 @@ class BookListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Book Nook")),
+      appBar: AppBar(
+        title: const Text(
+          "Book Nook",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.blueGrey.shade800,
+        centerTitle: true,
+      ),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(12),
             child: Text(
-              "Total catalog value: ${formatPrice(calculateTotalValue(catalog))}",
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              "Total catalog value: "
+                  "${formatPrice(calculateTotalValue(catalog))}",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueGrey.shade900,
+              ),
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: catalog.length,
-              itemBuilder: (context, index) {
-                return ListTile(title: Text(catalog[index].getSummary()));
-              },
+            child: Container(
+              color: Colors.blueGrey.shade50,
+              child: ListView.builder(
+                itemCount: catalog.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.menu_book,
+                        color: Colors.blueGrey.shade800,
+                      ),
+                      title: Text(
+                        catalog[index].title,
+                        style: TextStyle(
+                          color: Colors.blueGrey.shade900,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(
+                        catalog[index].author,
+                        style: TextStyle(
+                          color: Colors.blueGrey.shade600,
+                        ),
+                      ),
+                      trailing: Text(
+                        formatPrice(catalog[index].price),
+                        style: TextStyle(
+                          color: Colors.blueGrey.shade800,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ],
